@@ -7,11 +7,10 @@
 #include "BIT_MATH.h"
 #include "STD_TYPES.h"
 
-#include "DIO_regs.h"
+#include "DIO_private.h"
 #include "DIO_interface.h"
-#include "DIO_config.h"
 
-
+//implementation of functions
 
 void DIO_voidSetPinDirection(u8 copy_u8PortName, u8 copy_u8PinNumber, u8 copy_u8Direction){
 switch(copy_u8Direction){
@@ -38,7 +37,7 @@ default : break;
 }
 
 
-void DIO_SetPinValue (u8 copy_u8PortName, u8 copy_u8PinNumber, u8 copy_u8Value){
+void DIO_voidSetPinValue (u8 copy_u8PortName, u8 copy_u8PinNumber, u8 copy_u8Value){
 switch(copy_u8Value){
 default:break;
 
@@ -108,48 +107,36 @@ switch(copy_u8PortName)	{
 }
 
 void DIO_voidSetPortValue (u8 copy_u8PortName,u8 copy_u8Value){
-switch (copy_u8PortName)
-{
+switch(copy_u8Value){
 default : break;
-case DIO_u8_PORTA : PORTA = copy_u8Value; break;
-case DIO_u8_PORTB : PORTB = copy_u8Value; break;
-case DIO_u8_PORTC : PORTC = copy_u8Value; break;
-case DIO_u8_PORTD : PORTD = copy_u8Value; break;
-}
 
+case DIO_u8_PORT_HIGH:
+switch(copy_u8PortName)	{
+default : break;
+case DIO_u8_PORTA : PORTA = 0xff;
+case DIO_u8_PORTB : PORTB = 0xff;
+case DIO_u8_PORTC : PORTC = 0xff;
+case DIO_u8_PORTD : PORTD = 0xff;
+}break;
+
+case DIO_u8_PORT_LOW :
+switch(copy_u8PortName)	{
+	default : break;
+	case DIO_u8_PORTA : PORTA = 0x00;
+	case DIO_u8_PORTB : PORTB = 0x00;
+	case DIO_u8_PORTC : PORTC = 0x00;
+	case DIO_u8_PORTD : PORTD = 0x00;
+}break;
+}
 }
 
 u8 DIO_u8GetPortvalue(u8 Copy_u8PortName){
- u8 LOC_u8Return = 0;
+ u8 Port_value = 0;
 switch (Copy_u8PortName){
 default : break;
-    case DIO_u8_PORTA : LOC_u8Return = PINA ; break;
-	case DIO_u8_PORTA : LOC_u8Return = PINA ; break;
-	case DIO_u8_PORTA : LOC_u8Return = PINA ; break;
-	case DIO_u8_PORTA : LOC_u8Return = PINA ; break;
-}
-return LOC_u8Return;
-}
-
-
-void DIO_voidConnectPullup (u8 copy_u8PortName,u8 copy_u8PinNumber, u8 copy_u8Enable){
-switch (copy_u8Enable){
-default : break;
-case 1 :
-switch (copy_u8PortName){
-default : break;
-case DIO_u8_PORTA : SET_BIT(PORTA,copy_u8PinNumber); break;
-case DIO_u8_PORTB : SET_BIT(PORTB,copy_u8PinNumber); break;
-case DIO_u8_PORTC : SET_BIT(PORTC,copy_u8PinNumber); break;
-case DIO_u8_PORTD : SET_BIT(PORTD,copy_u8PinNumber); break;
-} break;
-case 0 :
-switch (copy_u8PortName){
-	default : break;
-	case DIO_u8_PORTA : CLR_BIT(PORTA,copy_u8PinNumber); break;
-	case DIO_u8_PORTB : CLR_BIT(PORTB,copy_u8PinNumber); break;
-	case DIO_u8_PORTC : CLR_BIT(PORTC,copy_u8PinNumber); break;
-	case DIO_u8_PORTD : CLR_BIT(PORTD,copy_u8PinNumber); break;
-} break;
+    case DIO_u8_PORTA : return PINA ; break;
+	case DIO_u8_PORTB : return PINB ; break;
+	case DIO_u8_PORTC : return PINC ; break;
+	case DIO_u8_PORTD : return PIND ; break;
 }
 }
