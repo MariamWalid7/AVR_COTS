@@ -178,42 +178,27 @@ DIO_ErrorState DIO_enumSetPortDirection(u8 copy_u8PortName,u8 copy_u8Direction){
 }
 
 /*
- * description: function sets the value of port (high/low). 
+ * description: function sets the value of port  
  * parameters : port name, value.
  * return : its state
  *
  */
 DIO_ErrorState DIO_enumSetPortValue (u8 copy_u8PortName,u8 copy_u8Value){
+	
 	DIO_ErrorState LOC_enumState = DIO_OK;
 	
-	if((copy_u8PortName <= DIO_u8_PORTD) && ((copy_u8Value <= 255) || (copy_u8Value <= DIO_u8_PORT_LOW) || (copy_u8Value <= DIO_u8_PORT_HIGH))){	
-	
-      switch(copy_u8Value){
-		  
-       case DIO_u8_PORT_HIGH:
-        switch(copy_u8PortName){
-         
-         case DIO_u8_PORTA : PORTA = 0xff;
-         case DIO_u8_PORTB : PORTB = 0xff;
-         case DIO_u8_PORTC : PORTC = 0xff;
-         case DIO_u8_PORTD : PORTD = 0xff;
-		 
-          }break;
-
-      case DIO_u8_PORT_LOW :
-       switch(copy_u8PortName){
-		   
-	    case DIO_u8_PORTA : PORTA = 0x00;
-	    case DIO_u8_PORTB : PORTB = 0x00;
-	    case DIO_u8_PORTC : PORTC = 0x00;
-	    case DIO_u8_PORTD : PORTD = 0x00;
-        }break;
-    }
+     if (copy_u8PortName <= DIO_u8_PORTD){ 
+	switch(copy_u8PortName){
+		case DIO_u8_PORTA : PORTA = copy_u8Value; break;
+		case DIO_u8_PORTB : PORTB = copy_u8Value; break;
+		case DIO_u8_PORTC : PORTC = copy_u8Value; break;
+		case DIO_u8_PORTD : PORTD = copy_u8Value; break;
+	}
  }
- 	else{
-	 	LOC_enumState = DIO_NOK;
- 	}
- return LOC_enumState; 
+ else {
+	 LOC_enumState = DIO_NOK;
+ }
+ return LOC_enumState;
 }
 
 /*
@@ -238,4 +223,33 @@ DIO_ErrorState DIO_enumGetPortvalue(u8 copy_u8PortName, u8 *copy_u8PtrData){
 	  LOC_enumState = DIO_NOK;
   }
   return LOC_enumState;
+}
+
+
+/*
+ * description: function enables internal pull up. 
+ * parameters : port name, pin number enable
+ * return : void
+ *
+ */
+void DIO_voidConnectPullup (u8 copy_u8PortName,u8 copy_u8PinNumber, u8 copy_u8Enable){
+	switch (copy_u8Enable){
+		default : break;
+		case 1 :
+		switch (copy_u8PortName){
+			default : break;
+			case DIO_u8_PORTA : SET_BIT(PORTA,copy_u8PinNumber); break;
+			case DIO_u8_PORTB : SET_BIT(PORTB,copy_u8PinNumber); break;
+			case DIO_u8_PORTC : SET_BIT(PORTC,copy_u8PinNumber); break;
+			case DIO_u8_PORTD : SET_BIT(PORTD,copy_u8PinNumber); break;
+		} break;
+		case 0 :
+		switch (copy_u8PortName){
+			default : break;
+			case DIO_u8_PORTA : CLR_BIT(PORTA,copy_u8PinNumber); break;
+			case DIO_u8_PORTB : CLR_BIT(PORTB,copy_u8PinNumber); break;
+			case DIO_u8_PORTC : CLR_BIT(PORTC,copy_u8PinNumber); break;
+			case DIO_u8_PORTD : CLR_BIT(PORTD,copy_u8PinNumber); break;
+		} break;
+	}
 }
