@@ -46,7 +46,7 @@ u8 Button_u8Read (BUTTON_Type BUTTON_Config){
 	 
 	 if ((BUTTON_Config.PullState == BUTTON_INT_PULLUP) || (BUTTON_Config.PullState == BUTTON_EXT_PULLUP)){
 		  
-	 DIO_u8GetPinvalue(BUTTON_Config.Port, BUTTON_Config.Pin, &LOC_u8PinValue);
+	 DIO_enumGetPinvalue(BUTTON_Config.Port, BUTTON_Config.Pin, &LOC_u8PinValue);
 	 
 	 if(LOC_u8PinValue == 1){
 		 
@@ -63,7 +63,7 @@ u8 Button_u8Read (BUTTON_Type BUTTON_Config){
 	 
 	 else if (BUTTON_Config.PullState == BUTTON_EXT_PULLDOWN)	{
 		 
-		 DIO_u8GetPinvalue(BUTTON_Config.Port, BUTTON_Config.Pin, &LOC_u8PinValue);
+		 DIO_enumGetPinvalue(BUTTON_Config.Port, BUTTON_Config.Pin, &LOC_u8PinValue);
 		 
 		 if(LOC_u8PinValue == 1){
 			 
