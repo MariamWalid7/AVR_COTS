@@ -50,12 +50,12 @@ u8 Button_u8Read (BUTTON_Type BUTTON_Config){
 	 
 	 if(LOC_u8PinValue == 1){
 		 
-		 LOC_u8State == BUTTON_NOTPRESSED;
+		 LOC_u8State = BUTTON_NOTPRESSED;
 	 }
 	 
 	 else if(LOC_u8PinValue == 0){
 		 
-		 LOC_u8State == BUTTON_PRESSED;
+		 LOC_u8State = BUTTON_PRESSED;
 	 }
 	 
 	 }
@@ -67,12 +67,12 @@ u8 Button_u8Read (BUTTON_Type BUTTON_Config){
 		 
 		 if(LOC_u8PinValue == 1){
 			 
-			 LOC_u8State == BUTTON_PRESSED;
+			 LOC_u8State = BUTTON_PRESSED;
 		 }
 		 
 		 else if(LOC_u8PinValue == 0){
 			 
-			 LOC_u8State == BUTTON_NOTPRESSED;
+			 LOC_u8State = BUTTON_NOTPRESSED;
 		 }
 	 } 
 
